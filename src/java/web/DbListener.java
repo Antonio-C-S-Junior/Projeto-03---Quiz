@@ -16,10 +16,10 @@ import javax.servlet.ServletContextListener;
 /**
  * Web application lifecycle listener.
  *
- * @author rlarg
+ * @author 56235
  */
 public class DbListener implements ServletContextListener {
-    public static final String URL = "jdbc:sqlite:C:\\Users\\rlarg\\dbnot.db";
+    public static final String URL = "jdbc:sqlite:C:\\Users\\56235\\projeto03";
     
     public static String exceptionMessage = null;
 
@@ -31,20 +31,30 @@ public class DbListener implements ServletContextListener {
             Connection con = DriverManager.getConnection(URL);
             Statement stmt = con.createStatement();
             step = "'users' table creation";
-            stmt.executeUpdate("CREATE TABLE IF NOT EXISTS users("
-                    + "name VARCHAR(200) NOT NULL,"
+            stmt.executeUpdate("CREATE TABLE IF NOT EXISTS users("                   
                     + "login VARCHAR(20) PRIMARY KEY,"
+                    + "name VARCHAR(200) NOT NULL,"
                     + "password_hash LONG NOT NULL,"
                     + ")");
+            if(User.getList().isEmpty()){
+                step = "default users creations";
+                stmt.executeUpdate("'antonio', 'Antonio Carlos', "
+                        + "insert into users values("+"1234".hashCode()+")");
+                stmt.executeUpdate("INSERT INTO users VALUES("
+                        + "'teste', 'Teste Teste', "+"123".hashCode()+")");
+                stmt.executeUpdate("insert into users values("
+                        + "'noemi', 'Noemi', "+"123456".hashCode()+")");
+            }
             stmt.close();
             con.close();
         }catch(Exception ex){
             exceptionMessage = step + ": " + ex.getMessage();
         }
     }
-
+    
     @Override
     public void contextDestroyed(ServletContextEvent sce) {
-        
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }
+    

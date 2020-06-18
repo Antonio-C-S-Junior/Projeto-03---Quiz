@@ -5,6 +5,10 @@
  */
 package db;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.ArrayList;
 
 /**
@@ -15,9 +19,19 @@ public class User {
     private String login;
     private String name;
     
-    public ArrayList<User> getList() throws Exception{
+    public static ArrayList<User> getList() throws Exception{
         ArrayList<User> list = new ArrayList<>();
+        Class.forName("org.sqlite.JDBC");
+        Connection con = DriverManager.getConnection(web.DbListener.URL);
+        Statement stmt = con.createStatement();
+        ResultSet rs = stmt.executeQuery("select * from users");
+        while (rs.next()) {
+            list.add(new User(rs.getString("login", rs.getString("name"))));
+            }
         
+        rs.close();
+        stmt.close();
+        con.close();
         return list;
     }
 

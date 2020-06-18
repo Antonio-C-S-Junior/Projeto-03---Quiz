@@ -5,7 +5,6 @@
  */
 package web;
 
-import java.util.Locale.Category;
 import db.User;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -19,7 +18,7 @@ import javax.servlet.ServletContextListener;
  * @author 56235
  */
 public class DbListener implements ServletContextListener {
-    public static final String URL = "jdbc:sqlite:C:\\Users\\56235\\projeto03";
+    public static final String URL = "jdbc:sqlite:C:\\BD Projeto03\\projeto03";
     
     public static String exceptionMessage = null;
 

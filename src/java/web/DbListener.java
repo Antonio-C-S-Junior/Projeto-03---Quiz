@@ -5,6 +5,7 @@
  */
 package web;
 
+import db.Question;
 import java.util.Locale.Category;
 import db.User;
 import java.sql.Connection;
@@ -38,7 +39,23 @@ public class DbListener implements ServletContextListener {
                     + ")");
             if(User.getList().isEmpty()){
                 step = "default users creations";
-                stmt.executeUpdate("'antonio', 'Antonio Carlos', "
+                stmt.executeUpdate("insert into users values("
+                        + "'antonio' 'Antonio Carlos' "+"1234".hashCode()+")");
+                stmt.executeUpdate("INSERT INTO users VALUES("
+                        + "'teste', 'Teste Teste', "+"123".hashCode()+")");
+                stmt.executeUpdate("insert into users values("
+                        + "'noemi', 'Noemi', "+"123456".hashCode()+")");
+            }
+            
+            Class.forName("org.sqlite.JDBC");
+            step = "'questions' table creation";
+            stmt.executeUpdate("CREATE TABLE IF NOT EXISTS questions("                   
+                    + "question VARCHAR(200) NOT NULL,"
+                    + "answer VARCHAR(200) NOT NULL,"
+                    + ")");
+            if(Question.getList().isEmpty()){
+                step = "default users creations";
+                stmt.executeUpdate("insert into users values("
                         + "insert into users values("+"1234".hashCode()+")");
                 stmt.executeUpdate("INSERT INTO users VALUES("
                         + "'teste', 'Teste Teste', "+"123".hashCode()+")");

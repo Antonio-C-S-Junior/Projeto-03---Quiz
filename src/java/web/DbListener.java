@@ -19,7 +19,7 @@ import javax.servlet.ServletContextListener;
  * @author 56235
  */
 public class DbListener implements ServletContextListener {
-    public static final String URL = "jdbc:sqlite:C:\\BD Projeto03\\projeto03";
+    public static final String URL = "jdbc:sqlite:C:\\BD Projeto03\\projeto03.db";
     
     public static String exceptionMessage = null;
 
@@ -32,7 +32,7 @@ public class DbListener implements ServletContextListener {
             Statement stmt = con.createStatement();
             step = "'users' table creation";
             stmt.executeUpdate("CREATE TABLE IF NOT EXISTS users("                   
-                    + "login VARCHAR(20) PRIMARY KEY,"
+                    + "login VARCHAR(20) UNIQUE NOT NULL,"
                     + "name VARCHAR(200) NOT NULL,"
                     + "password_hash LONG NOT NULL,"
                     + ")");
@@ -46,21 +46,7 @@ public class DbListener implements ServletContextListener {
                         + "'noemi', 'Noemi', "+"123456".hashCode()+")");
             }
             
-            Class.forName("org.sqlite.JDBC");
-            step = "'questions' table creation";
-            stmt.executeUpdate("CREATE TABLE IF NOT EXISTS questions("                   
-                    + "question VARCHAR(200) NOT NULL,"
-                    + "answer VARCHAR(200) NOT NULL,"
-                    + ")");
-            if(Question.getList().isEmpty()){
-                step = "default users creations";
-                stmt.executeUpdate("insert into users values("
-                        + "insert into users values("+"1234".hashCode()+")");
-                stmt.executeUpdate("INSERT INTO users VALUES("
-                        + "'teste', 'Teste Teste', "+"123".hashCode()+")");
-                stmt.executeUpdate("insert into users values("
-                        + "'noemi', 'Noemi', "+"123456".hashCode()+")");
-            }
+            
             stmt.close();
             con.close();
         }catch(Exception ex){

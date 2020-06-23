@@ -29,6 +29,8 @@
 
 
 <h1> Projeto - Quiz </h1>
+<hr size="3" style="background-color: black;border-color: black"/>
+<br />
 <%if(session.getAttribute("user.login")==null){%>
     <form method="post">
         Usuário: <input type="text" name="user.login"/>

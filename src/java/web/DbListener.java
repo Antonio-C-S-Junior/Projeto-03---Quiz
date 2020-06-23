@@ -48,6 +48,34 @@ public class DbListener implements ServletContextListener {
                         + "'luciana', 'Luciana Machado', "+"123456".hashCode()+")");
             }
             
+            Class.forName("org.sqlite.JDBC");
+            step = "'questions' table creation";
+            stmt.executeUpdate("CREATE TABLE IF NOT EXISTS questions("                   
+                    + "question VARCHAR(200) UNIQUE NOT NULL, "
+                    + "correctQuestion BOOLEAN NOT NULL, "
+                    + "optionsQuestion NOT NULL "
+                    + ")");
+            if(Question.getList().isEmpty()){
+                step = "default users creations";
+                stmt.executeUpdate("INSERT INTO questions VALUES("
+                        + "'antonio', 'Antonio Carlos', "+"1234".hashCode()+")");
+                stmt.executeUpdate("INSERT INTO questions VALUES("
+                        + "'thifany', 'Thifany Adelli', "+"123".hashCode()+")");
+                stmt.executeUpdate("INSERT INTO questions VALUES("
+                        + "'noemi', 'Noemi Ribeiro', "+"123456".hashCode()+")");
+                stmt.executeUpdate("INSERT INTO questions VALUES("
+                        + "'luciana', 'Luciana Machado', "+"123456".hashCode()+")");
+            }
+            
+            Class.forName("org.sqlite.JDBC");
+            step = "'esults' table creation";
+            stmt.executeUpdate("CREATE TABLE IF NOT EXISTS results("                   
+                    + "resultUser NUMERIC(2) UNIQUE NOT NULL, "
+                    + "resultNewest NUMERIC(2) NOT NULL, "
+                    + "resultTopTen NUMERIC(2) NOT NULL, "
+                    + "login VARCHAR(20) FOREIGN KEY NOT NULL "
+                    + ")");
+            
             
             stmt.close();
             con.close();

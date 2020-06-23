@@ -7,9 +7,11 @@ package db;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
+import web.DbListener;
 
 /**
  *
@@ -24,7 +26,7 @@ public class Question {
         Class.forName("org.sqlite.JDBC");
         Connection con = DriverManager.getConnection(web.DbListener.URL);
         Statement stmt = con.createStatement();
-        ResultSet rs = stmt.executeQuery("select * from questions");
+        ResultSet rs = stmt.executeQuery("SELECT * FROM questions");
         while (rs.next()) {
             list.add(new Question(rs.getString("question"), rs.getString("answer")));
             }
@@ -33,6 +35,26 @@ public class Question {
         stmt.close();
         con.close();
         return list;
+    }
+    
+    public static Question getQuestion(String rowid)throws Exception{
+        Question question = null;
+        Class.forName("org.sqlite.JDBC");
+        Connection con = DriverManager.getConnection(web.DbListener.URL);
+        PreparedStatement stmt = con.prepareStatement
+        ("SELECT * FROM questions WHERE rowid=?");
+        stmt.setString(1, rowid);
+        ResultSet rs = stmt.executeQuery();
+        if(rs.next()){
+            question = new Question(
+                    rs.getString("question"), 
+                    rs.getString("optionsQuestion")
+            );
+        }
+        rs.close();
+        stmt.close();
+        con.close();
+        return question;
     }
 
     public Question(String question, String answer) {

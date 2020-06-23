@@ -9,6 +9,6 @@ package db;
  *
  * @author 56235
  */
-public class Result {
+public class ResultNewest {
     
 }

@@ -57,6 +57,26 @@ public class User {
         con.close();
         return user;
     }
+    
+    public static User getLogin(String login)throws Exception{
+        User user = null;
+        Class.forName("org.sqlite.JDBC");
+        Connection con = DriverManager.getConnection(web.DbListener.URL);
+        PreparedStatement stmt = con.prepareStatement
+        ("SELECT * from users WHERE login=? ");
+        stmt.setString(1, login);
+        ResultSet rs = stmt.executeQuery();
+        if(rs.next()){
+            user = new User(
+                    rs.getString("login"), 
+                    rs.getString("name")
+            );
+        }
+        rs.close();
+        stmt.close();
+        con.close();
+        return user;
+    }
 
     public static void changePassword(String login, String newPassword) throws Exception{
         Class.forName("org.sqlite.JDBC");

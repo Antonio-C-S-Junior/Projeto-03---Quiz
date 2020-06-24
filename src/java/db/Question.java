@@ -19,7 +19,6 @@ import web.DbListener;
  */
 public class Question {
     private String question;
-    private String answer;
     
     public static ArrayList<Question> getList() throws Exception{
         ArrayList<Question> list = new ArrayList<>();
@@ -28,7 +27,7 @@ public class Question {
         Statement stmt = con.createStatement();
         ResultSet rs = stmt.executeQuery("SELECT * FROM questions");
         while (rs.next()) {
-            list.add(new Question(rs.getString("question"), rs.getString("answer")));
+            list.add(new Question(rs.getString("question")));
             }
         
         rs.close();
@@ -47,9 +46,7 @@ public class Question {
         ResultSet rs = stmt.executeQuery();
         if(rs.next()){
             question = new Question(
-                    rs.getString("question"), 
-                    rs.getString("optionsQuestion")
-            );
+                    rs.getString("question"));
         }
         rs.close();
         stmt.close();
@@ -57,17 +54,8 @@ public class Question {
         return question;
     }
 
-    public Question(String question, String answer) {
+    public Question(String question) {
         this.question = question;
-        this.answer = answer;
-    }
-
-    public String getAnswer() {
-        return answer;
-    }
-
-    public void setAnswer(String answer) {
-        this.answer = answer;
     }
 
     public String getQuestion() {

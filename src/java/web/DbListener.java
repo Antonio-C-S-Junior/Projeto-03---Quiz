@@ -68,12 +68,13 @@ public class DbListener implements ServletContextListener {
             }
             
             Class.forName("org.sqlite.JDBC");
-            step = "'esults' table creation";
+            step = "'results' table creation";
             stmt.executeUpdate("CREATE TABLE IF NOT EXISTS results("                   
                     + "resultUser NUMERIC(2) UNIQUE NOT NULL, "
                     + "resultNewest NUMERIC(2) NOT NULL, "
                     + "resultTopTen NUMERIC(2) NOT NULL, "
-                    + "login VARCHAR(20) FOREIGN KEY NOT NULL "
+                    + "login VARCHAR(20) NOT NULL,"
+                    + "CONSTRAINT result_users_login_fk FOREIGN KEY (login) REFERENCES users(login)"
                     + ")");
             
             
